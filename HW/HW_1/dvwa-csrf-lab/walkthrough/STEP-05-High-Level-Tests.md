@@ -12,6 +12,10 @@ Show difference between missing token and valid token at high level.
 
 `file:///home/mmswflow/Documents/uni-labs/Sem%20II/security-encryption-labs/HW/HW_1/dvwa-csrf-lab/csrf_poc_high_missing_token.html`
 
+Windows example:
+
+`file:///C:/path/to/security-encryption-labs/HW/HW_1/dvwa-csrf-lab/csrf_poc_high_missing_token.html`
+
 Expected:
 - Request fails, typically with token error.
 
@@ -25,6 +29,10 @@ Expected:
 6. Open file:
 
 `file:///home/mmswflow/Documents/uni-labs/Sem%20II/security-encryption-labs/HW/HW_1/dvwa-csrf-lab/csrf_poc_high_manual_token.html`
+
+Windows example:
+
+`file:///C:/path/to/security-encryption-labs/HW/HW_1/dvwa-csrf-lab/csrf_poc_high_manual_token.html`
 
 Expected:
 - With valid active-session token, DVWA can show `Password Changed.`

@@ -1,27 +1,31 @@
-# DVWA CSRF Lab Docs Index
+# DVWA CSRF Lab Documentation Index
 
-This folder contains a local **Damn Vulnerable Web Application (DVWA)** lab focused on **Cross-Site Request Forgery (CSRF)**.
+This folder contains a local lab for **Damn Vulnerable Web Application (DVWA)** and **Cross-Site Request Forgery (CSRF)**.
 
-Use these guides in order:
+## Which README to Use
 
-1. [walkthrough/README-WALKTHROUGH.md](walkthrough/README-WALKTHROUGH.md) for step-by-step execution, one test at a time.
-2. [README-DOCKER-SETUP-AND-TEST.md](README-DOCKER-SETUP-AND-TEST.md) for setup, run, and test flow.
-3. [README-CSRF.md](README-CSRF.md) for the security concept.
-4. [README-POC.md](README-POC.md) for Proof of Concept (PoC) files and level behavior.
-5. [README-DVWA-STRUCTURE.md](README-DVWA-STRUCTURE.md) for DVWA internals relevant to this lab.
+- [README-DOCKER-SETUP-AND-TEST.md](README-DOCKER-SETUP-AND-TEST.md)
+Purpose: environment setup, container start/stop, port checks, database initialization.
+Use it when: you need to boot the lab or reset it.
 
-## Files
+- [walkthrough/README-WALKTHROUGH.md](walkthrough/README-WALKTHROUGH.md)
+Purpose: run tests one by one in execution order.
+Use it when: you want a complete manual run from start to cleanup.
 
-- `compose.yml`: Docker Compose service definition.
-- `csrf_poc.html`: Baseline CSRF PoC request.
-- `csrf_poc_medium.html`: Medium-level test PoC.
-- `csrf_poc_high_missing_token.html`: High-level expected-fail PoC.
-- `csrf_poc_high_manual_token.html`: High-level manual token PoC template.
-- `csrf_poc_impossible_missing_requirements.html`: Impossible-level expected-fail PoC.
-- `csrf_poc_impossible_manual_token.html`: Impossible-level manual token PoC template.
+- [README-CSRF.md](README-CSRF.md)
+Purpose: explain CSRF mechanics and why each DVWA security level behaves differently.
+Use it when: you need theory and level-specific security analysis.
 
-## Safety
+- [README-POC.md](README-POC.md)
+Purpose: explain what each Proof of Concept (PoC) file does and what result to expect.
+Use it when: you are choosing or editing a PoC file.
 
-- Localhost use only.
-- Controlled lab use only.
-- Do not use these techniques against systems you do not own or have explicit permission to test.
+- [README-DVWA-STRUCTURE.md](README-DVWA-STRUCTURE.md)
+Purpose: explain relevant DVWA source files and request flow (`setup.php`, CSRF module files).
+Use it when: you need implementation details from the project structure.
+
+## Safety Scope
+
+- localhost only
+- controlled educational environment only
+- no real target testing

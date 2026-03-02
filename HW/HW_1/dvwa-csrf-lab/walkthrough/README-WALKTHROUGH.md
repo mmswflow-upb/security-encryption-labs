@@ -1,6 +1,7 @@
 # DVWA CSRF Step-by-Step Walkthrough
 
 This walkthrough runs all tests one by one in a local lab.
+It is execution-focused. Mechanism explanations are in `README-CSRF.md`.
 
 Acronyms used in this document:
 - **DVWA**: Damn Vulnerable Web Application
@@ -19,6 +20,10 @@ Acronyms used in this document:
 
 ## Lab Folder
 
-All files are in:
+Linux path:
 
 `/home/mmswflow/Documents/uni-labs/Sem II/security-encryption-labs/HW/HW_1/dvwa-csrf-lab`
+
+Windows path example:
+
+`C:\path\to\security-encryption-labs\HW\HW_1\dvwa-csrf-lab`

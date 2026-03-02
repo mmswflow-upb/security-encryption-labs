@@ -1,51 +1,55 @@
-# Damn Vulnerable Web Application (DVWA) Structure
+# DVWA Structure Relevant to This Lab
 
-## Purpose
+## What This README Is For
 
-**Damn Vulnerable Web Application (DVWA)** is a training application that intentionally contains vulnerabilities.
+This file maps the source files that control database setup and **Cross-Site Request Forgery (CSRF)** behavior in **Damn Vulnerable Web Application (DVWA)**.
 
-This lab focuses on the CSRF module, but understanding the related file layout helps explain behavior by security level.
+## Runtime Components in This Docker Image
 
-## Container-Level Structure Used in This Lab
+- Apache web server
+- MySQL or MariaDB database server
+- DVWA PHP (Hypertext Preprocessor) code under `/var/www/html`
 
-The Docker image serves the web application from:
-- `/var/www/html/`
+Container startup script (`/main.sh`) starts services only. It does not auto-run `setup.php` database reset.
 
-Important CSRF paths:
-- `/var/www/html/vulnerabilities/csrf/index.php`
-- `/var/www/html/vulnerabilities/csrf/source/low.php`
-- `/var/www/html/vulnerabilities/csrf/source/medium.php`
-- `/var/www/html/vulnerabilities/csrf/source/high.php`
-- `/var/www/html/vulnerabilities/csrf/source/impossible.php`
+## Important Paths
 
-## CSRF Module Request Flow
+- `setup.php`
+Purpose: handles database creation and reset when `Create / Reset Database` is submitted.
 
-1. `index.php` loads the current security level from cookie `security`.
-2. It includes one source file based on level: `low.php`, `medium.php`, `high.php`, or `impossible.php`.
-3. Each source file handles request validation and password update logic differently.
+- `config/config.inc.php`
+Purpose: database credentials, default DVWA settings, default security level.
 
-## Security Level Behavior Summary
+- `vulnerabilities/csrf/index.php`
+Purpose: dispatches to level-specific logic by reading security cookie.
 
-### Low
-- Accepts `GET` request with `password_new`, `password_conf`, and `Change`.
-- No anti-CSRF token check.
-- Vulnerable to simple forged requests.
+- `vulnerabilities/csrf/source/low.php`
+- `vulnerabilities/csrf/source/medium.php`
+- `vulnerabilities/csrf/source/high.php`
+- `vulnerabilities/csrf/source/impossible.php`
+Purpose: implement per-level CSRF checks.
 
-### Medium
-- Same parameters as low.
-- Adds a check based on the `Referer` header containing server name.
-- Weak defense, because `Referer` can be missing or bypassed in some setups.
+## Setup Flow (`setup.php`)
 
-### High
-- Requires anti-CSRF token via `user_token`.
-- Generates session token server-side and validates per request.
-- A naive forged request without token fails.
+1. Load setup page and anti-CSRF token.
+2. On `create_db` submission, validate token.
+3. Include database setup code (`dvwa/includes/DBMS/MySQL.php`).
+4. Drop and recreate `dvwa` database.
+5. Create required tables.
+6. Insert seed data, including `admin / password` user.
 
-### Impossible
-- Requires anti-CSRF token and current password (`password_current`).
-- Adds strict validation and better update flow.
-- Strongest level among DVWA CSRF options.
+This is why setup is mandatory before running tests.
 
-## Why This Matters for the Lab
+## CSRF Flow (`vulnerabilities/csrf/index.php`)
 
-The same endpoint can behave very differently only by switching security level. This is why your testing must cover low, medium, high, and impossible, not only low.
+1. Read current security level from cookie `security`.
+2. Include matching level source file.
+3. Evaluate incoming request.
+4. If checks pass, update password for current authenticated user.
+
+## Quick Mapping: Security Level to Implementation Rule
+
+- `low.php`: no anti-CSRF token check
+- `medium.php`: weak `Referer` contains server-name check
+- `high.php`: requires valid anti-CSRF token
+- `impossible.php`: requires valid anti-CSRF token and correct current password

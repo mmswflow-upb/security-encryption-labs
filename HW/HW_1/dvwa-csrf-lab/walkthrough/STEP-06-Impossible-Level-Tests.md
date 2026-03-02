@@ -12,6 +12,10 @@ Show that impossible level needs both valid token and current password.
 
 `file:///home/mmswflow/Documents/uni-labs/Sem%20II/security-encryption-labs/HW/HW_1/dvwa-csrf-lab/csrf_poc_impossible_missing_requirements.html`
 
+Windows example:
+
+`file:///C:/path/to/security-encryption-labs/HW/HW_1/dvwa-csrf-lab/csrf_poc_impossible_missing_requirements.html`
+
 Expected:
 - DVWA rejects request because requirements are missing.
 
@@ -28,6 +32,10 @@ Expected:
 7. Open:
 
 `file:///home/mmswflow/Documents/uni-labs/Sem%20II/security-encryption-labs/HW/HW_1/dvwa-csrf-lab/csrf_poc_impossible_manual_token.html`
+
+Windows example:
+
+`file:///C:/path/to/security-encryption-labs/HW/HW_1/dvwa-csrf-lab/csrf_poc_impossible_manual_token.html`
 
 Expected:
 - If both values are correct, DVWA can show `Password Changed.`

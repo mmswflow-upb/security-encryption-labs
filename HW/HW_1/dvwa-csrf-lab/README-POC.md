@@ -1,47 +1,58 @@
-# Proof of Concept (PoC) Guide
+# Proof of Concept (PoC) Files
 
-This guide targets **Damn Vulnerable Web Application (DVWA)** and its **Cross-Site Request Forgery (CSRF)** module.
+## What This README Is For
 
-## What a PoC Means Here
+This file explains each **Proof of Concept (PoC)** file, required inputs, and expected outcome per **Damn Vulnerable Web Application (DVWA)** security level.
 
-A **Proof of Concept (PoC)** is a minimal reproducible artifact that demonstrates behavior.
+## Endpoint and Common Fields
 
-In this lab, each PoC is a local Hypertext Markup Language (HTML) file that submits a request to DVWA's CSRF endpoint.
+All PoC files target:
+- `http://localhost:8081/vulnerabilities/csrf/`
 
-## PoC Files
+Common request fields used by DVWA:
+- `password_new`
+- `password_conf`
+- `Change`
 
-- `csrf_poc.html`: Baseline forged request, useful for low level.
-- `csrf_poc_medium.html`: Same request, used to test medium level behavior.
-- `csrf_poc_high_missing_token.html`: High-level request without token, expected to fail.
-- `csrf_poc_high_manual_token.html`: High-level template where you insert a real token manually.
-- `csrf_poc_impossible_missing_requirements.html`: Impossible-level request missing required fields, expected to fail.
-- `csrf_poc_impossible_manual_token.html`: Impossible-level template where you insert current password and token manually.
+Additional fields required at stronger levels:
+- `user_token` (high and impossible)
+- `password_current` (impossible)
 
-## Level Matrix
+## File-by-File Reference
 
-| Security level | File | Expected result | Why |
-|---|---|---|---|
-| low | `csrf_poc.html` | Password changes | No anti-CSRF token check |
-| medium | `csrf_poc_medium.html` | Depends on `Referer` handling | Weak `Referer`-based check |
-| high | `csrf_poc_high_missing_token.html` | Fails | Missing `user_token` |
-| high | `csrf_poc_high_manual_token.html` | Can succeed in controlled same-session test | Valid `user_token` supplied manually |
-| impossible | `csrf_poc_impossible_missing_requirements.html` | Fails | Missing current password and token validation context |
-| impossible | `csrf_poc_impossible_manual_token.html` | Can succeed only with current password and valid token | Requires both token and current password |
+- `csrf_poc.html`
+Use for: low level baseline test.
+Expected: success on low level.
 
-## How to Test Across Levels
+- `csrf_poc_medium.html`
+Use for: medium level test.
+Expected: depends on whether request passes weak `Referer` check.
 
-1. Sign in to DVWA.
-2. Set security level in `DVWA Security`.
-3. Open matching PoC file.
-4. Observe response message on `/vulnerabilities/csrf/`.
-5. Confirm by signing out and signing in with expected password.
+- `csrf_poc_high_missing_token.html`
+Use for: negative test on high level.
+Expected: fail because `user_token` is missing.
 
-## Important Practical Note
+- `csrf_poc_high_manual_token.html`
+Use for: controlled high-level test with manually inserted `user_token`.
+Expected: can succeed only when token is valid for current session.
 
-For medium level, browser `Referer` behavior can affect the result:
-- Opening from `file:///...` may omit `Referer` and fail.
-- Serving PoC over `http://localhost:<port>/...` may satisfy weak checks that only look for `localhost`.
+- `csrf_poc_impossible_missing_requirements.html`
+Use for: negative test on impossible level.
+Expected: fail because required controls are not satisfied.
 
-## Why High and Impossible Templates Are Useful
+- `csrf_poc_impossible_manual_token.html`
+Use for: controlled impossible-level test.
+Expected: can succeed only with both valid `user_token` and correct `password_current`.
 
-They show that simple forged requests are no longer enough. You need values that an external attacker should not be able to obtain safely, such as anti-CSRF token and current password.
+## Why Two Files for High and Impossible
+
+Each of those levels has:
+- one expected-fail file that proves the defense blocks incomplete requests
+- one manual file that demonstrates what exact protected inputs are required
+
+## Practical Testing Notes
+
+1. Stay logged in while opening PoC files.
+2. Use the same browser profile and tab session.
+3. For token-based tests, copy token from live DVWA form immediately before test.
+4. Verify result by logging out and logging back in with expected password.

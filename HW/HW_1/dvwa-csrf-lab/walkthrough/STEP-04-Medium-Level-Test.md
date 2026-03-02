@@ -12,6 +12,10 @@ Run medium-level CSRF checks and see effect of `Referer` validation.
 
 `file:///home/mmswflow/Documents/uni-labs/Sem%20II/security-encryption-labs/HW/HW_1/dvwa-csrf-lab/csrf_poc_medium.html`
 
+Windows example:
+
+`file:///C:/path/to/security-encryption-labs/HW/HW_1/dvwa-csrf-lab/csrf_poc_medium.html`
+
 4. Check DVWA response
 
 Expected for Test A:
@@ -22,9 +26,18 @@ Expected for Test A:
 1. Open terminal in lab folder
 2. Start local static server:
 
+Linux:
+
 ```bash
 cd "/home/mmswflow/Documents/uni-labs/Sem II/security-encryption-labs/HW/HW_1/dvwa-csrf-lab"
 python3 -m http.server 8082
+```
+
+Windows (PowerShell):
+
+```powershell
+Set-Location "C:\path\to\security-encryption-labs\HW\HW_1\dvwa-csrf-lab"
+py -m http.server 8082
 ```
 
 3. In browser, open:
