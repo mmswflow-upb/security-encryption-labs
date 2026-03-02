@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DVWA CSRF Impossible-Level Missing Requirements (Expected Fail)</title>
+</head>
+<body>
+  <p>This request omits required data for impossible level. It should fail.</p>
+
+  <form id="csrfForm" action="http://localhost:8081/vulnerabilities/csrf/" method="GET">
+    <input type="hidden" name="password_new" value="ImpFail123!">
+    <input type="hidden" name="password_conf" value="ImpFail123!">
+    <input type="hidden" name="Change" value="Change">
+  </form>
+
+  <script>
+    document.getElementById("csrfForm").submit();
+  </script>
+</body>
+</html>

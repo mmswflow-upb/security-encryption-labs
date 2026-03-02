@@ -1,0 +1,6 @@
+# Local verification helper (not part of walkthrough deliverables)
+dvwa_verify.php
+
+# Local scratch/runtime files
+*.log
+*.tmp

