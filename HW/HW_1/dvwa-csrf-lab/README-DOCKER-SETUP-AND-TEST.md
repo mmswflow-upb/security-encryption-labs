@@ -3,6 +3,7 @@
 ## What This README Is For
 
 This file covers environment operations:
+- submodule initialization
 - port checks
 - container start and status checks
 - database setup and reset
@@ -11,10 +12,29 @@ This file covers environment operations:
 For level-by-level manual testing, use:
 - `walkthrough/README-WALKTHROUGH.md`
 
+## Docker Setup
+
+This lab builds DVWA from source using the official Dockerfile in the `dvwa-source/` submodule.
+
+- Build context: `./dvwa-source` (the submodule)
+- App service: `dvwa-csrf-lab` on port `8081`
+- Database service: `dvwa-csrf-lab-db` running MariaDB 10 (internal only)
+
+The `compose.yml` sets `pull_policy: build`, so Docker always builds the image from the local source instead of pulling a pre-built image.
+
 ## Prerequisites
 
-- Docker running
-- Docker Compose v2 command available as `docker compose`
+- Docker installed and running
+- Docker Compose v2 available as `docker compose`
+- Git with submodule support
+
+## 0) Initialize Submodule
+
+If you cloned without `--recurse-submodules`, initialize `dvwa-source/` first:
+
+```bash
+git submodule update --init
+```
 
 ## 1) Check Port Conflicts
 
@@ -40,25 +60,17 @@ Preferred port order for this lab:
 Current lab mapping in `compose.yml`:
 - host `8081` -> container `80`
 
-## 2) Start and Verify
+## 2) Build and Start
 
-From lab folder on Linux:
+From the repo root:
 
 ```bash
-cd "/home/mmswflow/Documents/uni-labs/Sem II/security-encryption-labs/HW/HW_1/dvwa-csrf-lab"
-docker compose up -d
+docker compose up -d --build
 docker compose ps
 docker compose logs -f --tail=100
 ```
 
-From lab folder on Windows (PowerShell):
-
-```powershell
-Set-Location "C:\path\to\security-encryption-labs\HW\HW_1\dvwa-csrf-lab"
-docker compose up -d
-docker compose ps
-docker compose logs -f --tail=100
-```
+The `--build` flag ensures the image is built from `dvwa-source/` before starting.
 
 Open:
 - `http://localhost:8081`
@@ -78,38 +90,22 @@ Manual steps:
 
 - web reachable at `http://localhost:8081`
 - login works with expected account after setup
-- `docker compose ps` shows container status `Up`
+- `docker compose ps` shows both `dvwa-csrf-lab` and `dvwa-csrf-lab-db` as `Up`
 
 ## 5) Cleanup
 
-Stop and remove container and network:
-
-Linux:
+Stop and remove containers and network:
 
 ```bash
 docker compose down
 ```
 
-Windows (PowerShell):
-
-```powershell
-docker compose down
-```
-
-Full reset including volumes:
-
-Linux:
+Full reset including volumes (wipes database):
 
 ```bash
-docker compose down -v
-```
-
-Windows (PowerShell):
-
-```powershell
 docker compose down -v
 ```
 
 Difference:
-- `down`: keeps volumes
-- `down -v`: removes volumes
+- `down`: keeps volumes (database persists)
+- `down -v`: removes volumes (full reset)

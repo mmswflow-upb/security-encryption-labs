@@ -4,6 +4,30 @@
 
 This file explains each **Proof of Concept (PoC)** file, required inputs, and expected outcome per **Damn Vulnerable Web Application (DVWA)** security level.
 
+## Folder Structure
+
+PoC files are organized under `proof-of-concept/` by security level:
+
+```
+proof-of-concept/
+  low/
+    csrf_poc_low.html
+    README.md
+  medium/
+    csrf_poc_medium.html
+    README.md
+  high/
+    csrf_poc_high_missing_token.html
+    csrf_poc_high_manual_token.html
+    README.md
+  impossible/
+    csrf_poc_impossible_missing_requirements.html
+    csrf_poc_impossible_manual_token.html
+    README.md
+```
+
+Each level folder has its own `README.md` with full run instructions and expected results.
+
 ## Endpoint and Common Fields
 
 All PoC files target:
@@ -20,27 +44,27 @@ Additional fields required at stronger levels:
 
 ## File-by-File Reference
 
-- `csrf_poc.html`
+- `proof-of-concept/low/csrf_poc_low.html`
 Use for: low level baseline test.
 Expected: success on low level.
 
-- `csrf_poc_medium.html`
+- `proof-of-concept/medium/csrf_poc_medium.html`
 Use for: medium level test.
 Expected: depends on whether request passes weak `Referer` check.
 
-- `csrf_poc_high_missing_token.html`
+- `proof-of-concept/high/csrf_poc_high_missing_token.html`
 Use for: negative test on high level.
 Expected: fail because `user_token` is missing.
 
-- `csrf_poc_high_manual_token.html`
+- `proof-of-concept/high/csrf_poc_high_manual_token.html`
 Use for: controlled high-level test with manually inserted `user_token`.
 Expected: can succeed only when token is valid for current session.
 
-- `csrf_poc_impossible_missing_requirements.html`
+- `proof-of-concept/impossible/csrf_poc_impossible_missing_requirements.html`
 Use for: negative test on impossible level.
 Expected: fail because required controls are not satisfied.
 
-- `csrf_poc_impossible_manual_token.html`
+- `proof-of-concept/impossible/csrf_poc_impossible_manual_token.html`
 Use for: controlled impossible-level test.
 Expected: can succeed only with both valid `user_token` and correct `password_current`.
 

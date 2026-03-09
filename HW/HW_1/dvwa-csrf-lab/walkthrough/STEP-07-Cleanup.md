@@ -2,17 +2,9 @@
 
 ## Stop Lab
 
-Linux:
+Run from the repo root:
 
 ```bash
-cd "/home/mmswflow/Documents/uni-labs/Sem II/security-encryption-labs/HW/HW_1/dvwa-csrf-lab"
-docker compose down
-```
-
-Windows (PowerShell):
-
-```powershell
-Set-Location "C:\path\to\security-encryption-labs\HW\HW_1\dvwa-csrf-lab"
 docker compose down
 ```
 

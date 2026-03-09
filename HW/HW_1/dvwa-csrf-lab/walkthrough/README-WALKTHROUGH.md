@@ -20,10 +20,5 @@ Acronyms used in this document:
 
 ## Lab Folder
 
-Linux path:
-
-`/home/mmswflow/Documents/uni-labs/Sem II/security-encryption-labs/HW/HW_1/dvwa-csrf-lab`
-
-Windows path example:
-
-`C:\path\to\security-encryption-labs\HW\HW_1\dvwa-csrf-lab`
+All commands in this walkthrough are run from the repo root (`dvwa-csrf-lab/`).
+Clone the repo and `cd` into it before starting.

@@ -8,13 +8,8 @@ Show that impossible level needs both valid token and current password.
 
 1. In DVWA, set security level to `impossible`
 2. Stay logged in
-3. Open:
-
-`file:///home/mmswflow/Documents/uni-labs/Sem%20II/security-encryption-labs/HW/HW_1/dvwa-csrf-lab/csrf_poc_impossible_missing_requirements.html`
-
-Windows example:
-
-`file:///C:/path/to/security-encryption-labs/HW/HW_1/dvwa-csrf-lab/csrf_poc_impossible_missing_requirements.html`
+3. Open `proof-of-concept/impossible/csrf_poc_impossible_missing_requirements.html` in the browser
+   (use your file manager or browser's open-file dialog to navigate to the repo)
 
 Expected:
 - DVWA rejects request because requirements are missing.
@@ -25,17 +20,12 @@ Expected:
 2. Open `http://localhost:8081/vulnerabilities/csrf/`
 3. Copy `user_token` value from form
 4. Determine current password for current user (from previous successful step)
-5. Edit `csrf_poc_impossible_manual_token.html`
+5. Edit `proof-of-concept/impossible/csrf_poc_impossible_manual_token.html`
 6. Replace:
 - `IMPOSSIBLE_TOKEN` with token value
 - `CURRENT_PASSWORD` with current real password
-7. Open:
-
-`file:///home/mmswflow/Documents/uni-labs/Sem%20II/security-encryption-labs/HW/HW_1/dvwa-csrf-lab/csrf_poc_impossible_manual_token.html`
-
-Windows example:
-
-`file:///C:/path/to/security-encryption-labs/HW/HW_1/dvwa-csrf-lab/csrf_poc_impossible_manual_token.html`
+7. Open `proof-of-concept/impossible/csrf_poc_impossible_manual_token.html` in the browser
+   (use your file manager or browser's open-file dialog to navigate to the repo)
 
 Expected:
 - If both values are correct, DVWA can show `Password Changed.`

@@ -4,30 +4,51 @@
 
 This file maps the source files that control database setup and **Cross-Site Request Forgery (CSRF)** behavior in **Damn Vulnerable Web Application (DVWA)**.
 
-## Runtime Components in This Docker Image
+The DVWA source is included as a Git submodule at `dvwa-source/`.
+Initialize it with:
 
-- Apache web server
-- MySQL or MariaDB database server
-- DVWA PHP (Hypertext Preprocessor) code under `/var/www/html`
+```bash
+git submodule update --init
+```
 
-Container startup script (`/main.sh`) starts services only. It does not auto-run `setup.php` database reset.
+## Runtime Components
 
-## Important Paths
+- Apache web server (from `dvwa-source/Dockerfile`, based on `php:8-apache`)
+- MariaDB 10 database (separate container, see `compose.yml`)
+- DVWA PHP code mounted under `/var/www/html` inside the container
+
+The container startup script starts services only. It does not auto-run `setup.php`.
+
+## Important Source Paths
+
+All paths below are relative to `dvwa-source/`.
 
 - `setup.php`
 Purpose: handles database creation and reset when `Create / Reset Database` is submitted.
 
-- `config/config.inc.php`
-Purpose: database credentials, default DVWA settings, default security level.
+- `config/config.inc.php.dist`
+Purpose: template for database credentials and default DVWA settings.
+The Dockerfile copies this to `config/config.inc.php` at build time.
 
 - `vulnerabilities/csrf/index.php`
-Purpose: dispatches to level-specific logic by reading security cookie.
+Purpose: dispatches to level-specific logic by reading the security cookie.
 
 - `vulnerabilities/csrf/source/low.php`
 - `vulnerabilities/csrf/source/medium.php`
 - `vulnerabilities/csrf/source/high.php`
 - `vulnerabilities/csrf/source/impossible.php`
 Purpose: implement per-level CSRF checks.
+
+## Build Flow (`Dockerfile`)
+
+The `dvwa-source/Dockerfile`:
+1. Starts from `php:8-apache`
+2. Installs PHP extensions (`gd`, `mysqli`, `pdo`, `pdo_mysql`)
+3. Copies the full DVWA source into `/var/www/html`
+4. Copies `config/config.inc.php.dist` to `config/config.inc.php`
+5. Runs `composer install` for the API module
+
+Our `compose.yml` sets the build context to `./dvwa-source` so Docker builds directly from the submodule.
 
 ## Setup Flow (`setup.php`)
 
@@ -49,7 +70,7 @@ This is why setup is mandatory before running tests.
 
 ## Quick Mapping: Security Level to Implementation Rule
 
-- `low.php`: no anti-CSRF token check
-- `medium.php`: weak `Referer` contains server-name check
-- `high.php`: requires valid anti-CSRF token
-- `impossible.php`: requires valid anti-CSRF token and correct current password
+- `dvwa-source/vulnerabilities/csrf/source/low.php`: no anti-CSRF token check
+- `dvwa-source/vulnerabilities/csrf/source/medium.php`: weak `Referer` contains server-name check
+- `dvwa-source/vulnerabilities/csrf/source/high.php`: requires valid anti-CSRF token
+- `dvwa-source/vulnerabilities/csrf/source/impossible.php`: requires valid anti-CSRF token and correct current password

@@ -2,6 +2,17 @@
 
 This folder contains a local lab for **Damn Vulnerable Web Application (DVWA)** and **Cross-Site Request Forgery (CSRF)**.
 
+## Submodule
+
+DVWA source code is included as a Git submodule at `dvwa-source/` (official repo: digininja/DVWA).
+The lab builds directly from this source — no pre-built image is used.
+
+After cloning, initialize the submodule:
+
+```bash
+git submodule update --init
+```
+
 ## Which README to Use
 
 - [README-DOCKER-SETUP-AND-TEST.md](README-DOCKER-SETUP-AND-TEST.md)
@@ -19,6 +30,7 @@ Use it when: you need theory and level-specific security analysis.
 - [README-POC.md](README-POC.md)
 Purpose: explain what each Proof of Concept (PoC) file does and what result to expect.
 Use it when: you are choosing or editing a PoC file.
+PoC files are under [proof-of-concept/](proof-of-concept/) organized by level (`low`, `medium`, `high`, `impossible`), each with its own `README.md`.
 
 - [README-DVWA-STRUCTURE.md](README-DVWA-STRUCTURE.md)
 Purpose: explain relevant DVWA source files and request flow (`setup.php`, CSRF module files).
