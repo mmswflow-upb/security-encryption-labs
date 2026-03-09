@@ -1,5 +1,9 @@
 # Medium Level PoC
 
+## Goal
+
+Run medium-level CSRF checks and see the effect of `Referer` validation.
+
 ## Security Level Behavior
 
 The server checks whether the `Referer` header contains the server name.
@@ -11,12 +15,20 @@ This is a weak control: no cryptographic token is used, and the check can be byp
   Same forged GET request as low level.
   Behavior depends on how and where the file is opened.
 
-## Expected Results
+## How to Run
 
-**Test A — open from `file://`**
-Usually fails with `That request didn't look correct.` because the browser sends no `Referer` from a local file.
+### Test A: Open from `file://` (often fails)
 
-**Test B — serve from localhost**
+1. In DVWA, set security level to `medium`
+2. Stay logged in
+3. Open `proof-of-concept/medium/csrf_poc_medium.html` in the browser
+   (use your file manager or browser's open-file dialog to navigate to the repo)
+4. Check DVWA response
+
+Expected: usually `That request didn't look correct.` because the browser sends no `Referer` from a local file.
+
+### Test B: Serve from localhost (can pass weak checks)
+
 Start a local static server in the lab folder:
 
 Linux:
@@ -32,7 +44,7 @@ py -m http.server 8082
 Open in browser:
 `http://localhost:8082/proof-of-concept/medium/csrf_poc_medium.html`
 
-In many setups this passes the weak `Referer` check and the password changes.
+Expected: in many setups this passes the weak `Referer` check and the password changes.
 
 ## Verify
 

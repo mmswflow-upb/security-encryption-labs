@@ -1,5 +1,9 @@
 # High Level PoC
 
+## Goal
+
+Show the difference between a missing token (blocked) and a valid token (passes) at high level.
+
 ## Security Level Behavior
 
 The server validates an anti-CSRF token (`user_token`) against the current session.

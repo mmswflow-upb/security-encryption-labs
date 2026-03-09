@@ -15,7 +15,7 @@ git submodule update --init
 
 ## Which README to Use
 
-- [README-DOCKER-SETUP-AND-TEST.md](README-DOCKER-SETUP-AND-TEST.md)
+- [docs/README-DOCKER-SETUP-AND-TEST.md](docs/README-DOCKER-SETUP-AND-TEST.md)
 Purpose: environment setup, container start/stop, port checks, database initialization.
 Use it when: you need to boot the lab or reset it.
 
@@ -23,16 +23,15 @@ Use it when: you need to boot the lab or reset it.
 Purpose: run tests one by one in execution order.
 Use it when: you want a complete manual run from start to cleanup.
 
-- [README-CSRF.md](README-CSRF.md)
+- [docs/README-CSRF.md](docs/README-CSRF.md)
 Purpose: explain CSRF mechanics and why each DVWA security level behaves differently.
 Use it when: you need theory and level-specific security analysis.
 
-- [README-POC.md](README-POC.md)
-Purpose: explain what each Proof of Concept (PoC) file does and what result to expect.
-Use it when: you are choosing or editing a PoC file.
-PoC files are under [proof-of-concept/](proof-of-concept/) organized by level (`low`, `medium`, `high`, `impossible`), each with its own `README.md`.
+- [proof-of-concept/](proof-of-concept/)
+Purpose: PoC files organized by level (`low`, `medium`, `high`, `impossible`), each with its own `README.md` covering goal, security level behavior, run instructions, and expected results.
+Use it when: you are running or editing a PoC file.
 
-- [README-DVWA-STRUCTURE.md](README-DVWA-STRUCTURE.md)
+- [docs/README-DVWA-STRUCTURE.md](docs/README-DVWA-STRUCTURE.md)
 Purpose: explain relevant DVWA source files and request flow (`setup.php`, CSRF module files).
 Use it when: you need implementation details from the project structure.
 

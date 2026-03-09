@@ -1,5 +1,9 @@
 # Impossible Level PoC
 
+## Goal
+
+Show that impossible level requires both a valid token and the current password — defeating standard CSRF attacks.
+
 ## Security Level Behavior
 
 The server requires both:

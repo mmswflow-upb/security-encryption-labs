@@ -1,5 +1,7 @@
 # Step 07: Cleanup
 
+For full options see [docs/README-DOCKER-SETUP-AND-TEST.md](../docs/README-DOCKER-SETUP-AND-TEST.md).
+
 ## Stop Lab
 
 Run from the repo root:
@@ -8,20 +10,8 @@ Run from the repo root:
 docker compose down
 ```
 
-This stops and removes the container and network, but keeps volumes.
-
-## Full Reset
-
-Linux:
+## Full Reset (removes volumes)
 
 ```bash
 docker compose down -v
 ```
-
-Windows (PowerShell):
-
-```powershell
-docker compose down -v
-```
-
-This also removes volumes and resets persisted data.
