@@ -1,9 +1,3 @@
-[submodule "HW/HW_1/dvwa-csrf-lab/dvwa-source"]
-	path = HW/HW_1/dvwa-csrf-lab/dvwa-source
-	url = https://github.com/digininja/DVWA
-[submodule "HW/HW_1/DVWA"]
-	path = HW/HW_1/DVWA
-	url = https://github.com/digininja/DVWA.git
-[submodule "HW/HW_1/dvwa-source"]
-	path = HW/HW_1/dvwa-source
+[submodule "Big_HW/HW_1/dvwa-source"]
+	path = Big_HW/HW_1/dvwa-source
 	url = https://github.com/digininja/DVWA.git
