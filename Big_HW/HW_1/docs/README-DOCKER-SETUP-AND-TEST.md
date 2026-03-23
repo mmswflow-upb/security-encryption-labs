@@ -14,13 +14,13 @@ For level-by-level manual testing, use:
 
 ## Docker Setup
 
-This lab builds DVWA from source using the official Dockerfile in the `dvwa-source/` submodule.
+This lab uses the official DVWA compose file located at `dvwa-source/compose.yml`.
 
-- Build context: `./dvwa-source` (the submodule)
-- App service: `dvwa-csrf-lab` on port `8081`
-- Database service: `dvwa-csrf-lab-db` running MariaDB 10 (internal only)
+- Image: `ghcr.io/digininja/dvwa:latest` (pulled from registry)
+- App service: `dvwa` on port `4280`
+- Database service: `db` running MariaDB 10 (internal only)
 
-The `compose.yml` sets `pull_policy: build`, so Docker always builds the image from the local source instead of pulling a pre-built image.
+All `docker compose` commands use `-f dvwa-source/compose.yml` to reference the original file.
 
 ## Prerequisites
 
@@ -54,26 +54,21 @@ netstat -ano | findstr LISTENING
 Get-NetTCPConnection -State Listen | Select-Object LocalAddress,LocalPort,OwningProcess
 ```
 
-Preferred port order for this lab:
-`8080, 8081, 8082, 8083, 8000, 8001, 8888, 5000`
+Current lab mapping in `dvwa-source/compose.yml`:
+- host `4280` -> container `80`
 
-Current lab mapping in `compose.yml`:
-- host `8081` -> container `80`
-
-## 2) Build and Start
+## 2) Start
 
 From the repo root:
 
 ```bash
-docker compose up -d --build
-docker compose ps
-docker compose logs -f --tail=100
+docker compose -f dvwa-source/compose.yml up -d
+docker compose -f dvwa-source/compose.yml ps
+docker compose -f dvwa-source/compose.yml logs -f --tail=100
 ```
 
-The `--build` flag ensures the image is built from `dvwa-source/` before starting.
-
 Open:
-- `http://localhost:8081`
+- `http://localhost:4280`
 
 ## 3) Initialize Database (Required)
 
@@ -82,28 +77,28 @@ Important:
 - you must trigger setup manually
 
 Manual steps:
-1. open `http://localhost:8081/setup.php`
+1. open `http://localhost:4280/setup.php`
 2. click `Create / Reset Database`
-3. login at `http://localhost:8081/login.php` with `admin / password`
+3. login at `http://localhost:4280/login.php` with `admin / password`
 
 ## 4) Quick Health Checks
 
-- web reachable at `http://localhost:8081`
+- web reachable at `http://localhost:4280`
 - login works with expected account after setup
-- `docker compose ps` shows both `dvwa-csrf-lab` and `dvwa-csrf-lab-db` as `Up`
+- `docker compose -f dvwa-source/compose.yml ps` shows both `dvwa` and `db` as `Up`
 
 ## 5) Cleanup
 
 Stop and remove containers and network:
 
 ```bash
-docker compose down
+docker compose -f dvwa-source/compose.yml down
 ```
 
 Full reset including volumes (wipes database):
 
 ```bash
-docker compose down -v
+docker compose -f dvwa-source/compose.yml down -v
 ```
 
 Difference:

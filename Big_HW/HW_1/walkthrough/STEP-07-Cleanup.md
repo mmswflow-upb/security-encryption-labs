@@ -7,11 +7,11 @@ For full options see [docs/README-DOCKER-SETUP-AND-TEST.md](../docs/README-DOCKE
 Run from the repo root:
 
 ```bash
-docker compose down
+docker compose -f dvwa-source/compose.yml down
 ```
 
 ## Full Reset (removes volumes)
 
 ```bash
-docker compose down -v
+docker compose -f dvwa-source/compose.yml down -v
 ```

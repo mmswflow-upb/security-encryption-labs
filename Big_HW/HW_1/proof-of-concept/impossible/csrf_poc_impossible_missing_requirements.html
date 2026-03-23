@@ -7,7 +7,7 @@
 <body>
   <p>This request omits required data for impossible level. It should fail.</p>
 
-  <form id="csrfForm" action="http://localhost:8081/vulnerabilities/csrf/" method="GET">
+  <form id="csrfForm" action="http://localhost:4280/vulnerabilities/csrf/" method="GET">
     <input type="hidden" name="password_new" value="ImpFail123!">
     <input type="hidden" name="password_conf" value="ImpFail123!">
     <input type="hidden" name="Change" value="Change">

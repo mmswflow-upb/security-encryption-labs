@@ -6,9 +6,9 @@ Initialize DVWA database and sign in.
 
 ## Manual Steps
 
-1. Open `http://localhost:8081/setup.php`
+1. Open `http://localhost:4280/setup.php`
 2. Click `Create / Reset Database`
-3. After setup, open `http://localhost:8081/login.php`
+3. After setup, open `http://localhost:4280/login.php`
 4. Login with:
 - username: `admin`
 - password: `password`

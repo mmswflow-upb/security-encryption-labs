@@ -14,7 +14,7 @@ git submodule update --init
 ## Runtime Components
 
 - Apache web server (from `dvwa-source/Dockerfile`, based on `php:8-apache`)
-- MariaDB 10 database (separate container, see `compose.yml`)
+- MariaDB 10 database (separate container, see `dvwa-source/compose.yml`)
 - DVWA PHP code mounted under `/var/www/html` inside the container
 
 The container startup script starts services only. It does not auto-run `setup.php`.
@@ -47,8 +47,6 @@ The `dvwa-source/Dockerfile`:
 3. Copies the full DVWA source into `/var/www/html`
 4. Copies `config/config.inc.php.dist` to `config/config.inc.php`
 5. Runs `composer install` for the API module
-
-Our `compose.yml` sets the build context to `./dvwa-source` so Docker builds directly from the submodule.
 
 ## Setup Flow (`setup.php`)
 

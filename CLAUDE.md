@@ -57,37 +57,6 @@ conda run -n sec-labs python Labs/Lab_1/homework.py
 - `bcrypt.checkpw()` handles extracting the salt and re-hashing internally during comparison
 - Passwords are case-sensitive and whitespace-sensitive
 
-## HW
-
-### HW_1 - DVWA CSRF Lab
-
-**Location:** `HW/HW_1/`
-
-A local web security lab using Damn Vulnerable Web Application (DVWA) to study Cross-Site Request Forgery (CSRF). Runs via Docker Compose.
-
-DVWA source is included as a Git submodule. After cloning, initialize it:
-
-```bash
-git submodule update --init
-```
-
-Start the lab environment:
-
-```bash
-cd HW/HW_1
-docker compose up -d
-```
-
-The app is accessible at `http://localhost:8081`.
-
-**Documentation inside `HW/HW_1/`:**
-- `docs/README-DOCKER-SETUP-AND-TEST.md` - Environment setup, starting/stopping containers, database init
-- `docs/README-CSRF.md` - CSRF theory and per-security-level analysis
-- `docs/README-DVWA-STRUCTURE.md` - Relevant DVWA source files and request flow
-- `walkthrough/README-WALKTHROUGH.md` - Step-by-step manual test run
-- `proof-of-concept/` - PoC HTML files organized by DVWA security level (`low`, `medium`, `high`, `impossible`)
-
-**Safety scope:** localhost only, controlled educational environment only. Do not test against real targets.
 
 ## Notes for the AI Assistant
 

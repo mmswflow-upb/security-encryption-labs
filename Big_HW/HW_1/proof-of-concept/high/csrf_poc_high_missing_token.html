@@ -7,7 +7,7 @@
 <body>
   <p>This request intentionally omits user_token. On high level, it should fail.</p>
 
-  <form id="csrfForm" action="http://localhost:8081/vulnerabilities/csrf/" method="GET">
+  <form id="csrfForm" action="http://localhost:4280/vulnerabilities/csrf/" method="GET">
     <input type="hidden" name="password_new" value="HighFail123!">
     <input type="hidden" name="password_conf" value="HighFail123!">
     <input type="hidden" name="Change" value="Change">

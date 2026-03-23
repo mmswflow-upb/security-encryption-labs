@@ -33,7 +33,7 @@ Expected: DVWA rejects the request with a token error.
 
 ### Test B: Manual valid token (controlled success)
 
-1. Open `http://localhost:8081/vulnerabilities/csrf/` in browser
+1. Open `http://localhost:4280/vulnerabilities/csrf/` in browser
 2. Inspect the form source and copy the `user_token` value
 3. Edit `csrf_poc_high_manual_token.html` and replace `HIGH_TOKEN` with the copied value
 4. Open `proof-of-concept/high/csrf_poc_high_manual_token.html` in the browser immediately (token is single-use)

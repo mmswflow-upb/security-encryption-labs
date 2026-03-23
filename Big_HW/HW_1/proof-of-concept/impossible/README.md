@@ -36,7 +36,7 @@ Expected: DVWA rejects the request.
 
 ### Test B: Manual token + current password (controlled success)
 
-1. Open `http://localhost:8081/vulnerabilities/csrf/` in browser
+1. Open `http://localhost:4280/vulnerabilities/csrf/` in browser
 2. Copy the `user_token` value from the form source
 3. Note the current password for the logged-in user
 4. Edit `csrf_poc_impossible_manual_token.html`:

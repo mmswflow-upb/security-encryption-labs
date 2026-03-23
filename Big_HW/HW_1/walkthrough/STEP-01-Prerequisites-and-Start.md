@@ -16,16 +16,16 @@ If you cloned without `--recurse-submodules`, initialize the DVWA source submodu
 git submodule update --init
 ```
 
-Build and start:
+Start:
 
 ```bash
-docker compose up -d --build
-docker compose ps
-docker compose logs -f --tail=100
+docker compose -f dvwa-source/compose.yml up -d
+docker compose -f dvwa-source/compose.yml ps
+docker compose -f dvwa-source/compose.yml logs -f --tail=100
 ```
 
 ## Expected Result
 
-- Container `dvwa-csrf-lab` is `Up`
-- Port mapping includes `8081->80`
-- DVWA loads at `http://localhost:8081`
+- Both `dvwa` and `db` services are `Up`
+- Port mapping includes `4280->80`
+- DVWA loads at `http://localhost:4280`

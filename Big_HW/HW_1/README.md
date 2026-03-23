@@ -5,7 +5,7 @@ This folder contains a local lab for **Damn Vulnerable Web Application (DVWA)** 
 ## Submodule
 
 DVWA source code is included as a Git submodule at `dvwa-source/` (official repo: digininja/DVWA).
-The lab builds directly from this source — no pre-built image is used.
+The lab uses the original `dvwa-source/compose.yml` to pull the pre-built DVWA image.
 
 After cloning, initialize the submodule:
 

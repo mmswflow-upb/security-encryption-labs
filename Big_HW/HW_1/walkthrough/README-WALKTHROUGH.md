@@ -20,5 +20,5 @@ Acronyms used in this document:
 
 ## Lab Folder
 
-All commands in this walkthrough are run from the repo root (`dvwa-csrf-lab/`).
-Clone the repo and `cd` into it before starting.
+All commands in this walkthrough are run from the repo root.
+Clone the repo and `cd` into `HW_1/` before starting.
