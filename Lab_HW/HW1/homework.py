@@ -40,20 +40,23 @@ def authenticate(username: str, plain_password: str) -> None:
 if __name__ == "__main__":
 
     users = load_users()
-    users["alice"]   = hash_password("SuperSecret42!")
-    users["bob"]     = hash_password("hunter2")
-    users["charlie"] = hash_password("C0mplex#Pass")
+    users["mario"] = hash_password("SuperSecret42!")
+    users["abd"]   = hash_password("hunter2")
+    users["essam"] = hash_password("C0mplex#Pass")
+    users["layla"] = hash_password("Str0ngP@ss!")
     save_users(users)
     print()
 
-    authenticate("alice",   "SuperSecret42!")
-    authenticate("bob",     "hunter2")
-    authenticate("charlie", "C0mplex#Pass")
+    authenticate("mario", "SuperSecret42!")
+    authenticate("abd",   "hunter2")
+    authenticate("essam", "C0mplex#Pass")
+    authenticate("layla", "Str0ngP@ss!")
     print()
 
-    authenticate("alice",   "wrongpassword")
-    authenticate("bob",     "Hunter2")
-    authenticate("charlie", "C0mplex#Pass ")
+    authenticate("mario", "wrongpassword")
+    authenticate("abd",   "Hunter2")
+    authenticate("essam", "C0mplex#Pass ")
+    authenticate("layla", "str0ngp@ss!")
     print()
 
     authenticate("dave", "doesntmatter")
