@@ -23,6 +23,10 @@ Use it when: you need to boot the lab or reset it.
 Purpose: run tests one by one in execution order.
 Use it when: you want a complete manual run from start to cleanup.
 
+- [docs/README-WEB-SECURITY-BASICS.md](docs/README-WEB-SECURITY-BASICS.md)
+Purpose: foundational concepts (sessions, cookies, JWTs, local storage, and how they relate to CSRF).
+Use it when: you are new to these topics or need a refresher before reading the CSRF doc.
+
 - [docs/README-CSRF.md](docs/README-CSRF.md)
 Purpose: explain CSRF mechanics and why each DVWA security level behaves differently.
 Use it when: you need theory and level-specific security analysis.
