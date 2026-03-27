@@ -1,53 +1,96 @@
 import os
-import mysql.connector
-from flask import Flask, jsonify
+import bcrypt
+import psycopg2
+import psycopg2.extras
+from flask import Flask, request, session, redirect, url_for, render_template
 from dotenv import load_dotenv
 
 load_dotenv()
 
 app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY", "change-me")
 
 
-def get_db_connection():
-    """Create and return a MySQL connection."""
-    return mysql.connector.connect(
-        host=os.getenv("DB_HOST", "mysql"),
-        port=int(os.getenv("DB_PORT", 3306)),
-        database=os.getenv("DB_NAME", "lab_db"),
+def get_db():
+    return psycopg2.connect(
+        host=os.getenv("DB_HOST", "postgres"),
+        port=int(os.getenv("DB_PORT", 5432)),
+        dbname=os.getenv("DB_NAME", "lab_db"),
         user=os.getenv("DB_USER", "lab_user"),
         password=os.getenv("DB_PASSWORD", "lab_password"),
     )
 
 
 @app.route("/")
-def index():
-    return jsonify({"message": "Flask + MySQL container is running!", "status": "ok"})
+def landing():
+    return render_template("landing.html")
 
 
-@app.route("/health")
-def health():
-    """Check DB connectivity."""
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "GET":
+        return render_template("register.html")
+
+    username = request.form["username"].strip()
+    password = request.form["password"].encode()
+
+    # hash the password with bcrypt (salt is generated automatically)
+    hashed = bcrypt.hashpw(password, bcrypt.gensalt()).decode()
+
+    conn = get_db()
+    cur = conn.cursor()
     try:
-        conn = get_db_connection()
+        cur.execute(
+            "INSERT INTO users (username, password_hash) VALUES (%s, %s)",
+            (username, hashed),
+        )
+        conn.commit()
+    except psycopg2.errors.UniqueViolation:
+        conn.rollback()
+        return render_template("register.html", error="Username already taken.")
+    finally:
+        cur.close()
         conn.close()
-        return jsonify({"status": "healthy", "database": "connected"})
-    except Exception as e:
-        return jsonify({"status": "unhealthy", "error": str(e)}), 500
+
+    return redirect(url_for("login"))
 
 
-@app.route("/users")
-def get_users():
-    """Fetch all users from the DB."""
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM users")
-        users = cursor.fetchall()
-        cursor.close()
-        conn.close()
-        return jsonify({"users": users})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "GET":
+        return render_template("login.html")
+
+    username = request.form["username"].strip()
+    password = request.form["password"].encode()
+
+    conn = get_db()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cur.execute("SELECT * FROM users WHERE username = %s", (username,))
+    user = cur.fetchone()
+    cur.close()
+    conn.close()
+
+    if user is None or not bcrypt.checkpw(password, user["password_hash"].encode()):
+        return render_template("login.html", error="Invalid username or password.")
+
+    # store user in session (Flask signs the cookie with SECRET_KEY)
+    session["user_id"] = user["id"]
+    session["username"] = user["username"]
+    return redirect(url_for("dashboard"))
+
+
+@app.route("/dashboard")
+def dashboard():
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    return render_template("dashboard.html", username=session["username"])
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("landing"))
 
 
 if __name__ == "__main__":

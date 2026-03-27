@@ -1,13 +1,11 @@
--- This file runs automatically when the MySQL container starts for the first time.
+-- This file runs automatically when the PostgreSQL container starts for the first time.
 -- Add your schema or seed data here.
 
-CREATE DATABASE IF NOT EXISTS lab_db;
-USE lab_db;
+-- The database is already created via the POSTGRES_DB env var.
 
--- Example table (adjust for your lab needs)
 CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     username VARCHAR(100) NOT NULL UNIQUE,
-    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

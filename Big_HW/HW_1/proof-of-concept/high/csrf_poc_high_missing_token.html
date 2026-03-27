@@ -1,9 +1,11 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>DVWA CSRF High-Level Missing Token (Expected Fail)</title>
 </head>
+
 <body>
   <p>This request intentionally omits user_token. On high level, it should fail.</p>
 
@@ -17,4 +19,5 @@
     document.getElementById("csrfForm").submit();
   </script>
 </body>
+
 </html>

