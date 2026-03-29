@@ -23,3 +23,9 @@ Pages:
 3. Server hashes received password
 4. Server compares new hash with stored hash, if theyre the same it responds with a session ID or JWT
 
+## Homework
+
+- Implement logout function
+- make use of role dropdown (add it to DB)
+- add a link/button to dashboard thats visible only for admins and accessible only with admin role
+- 
