@@ -1,0 +1,16 @@
+# Development override — use with:
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+#
+# Adds live reload via Flask's built-in reloader.
+# Source code changes inside ./flask_app are picked up instantly
+# because the directory is bind-mounted into the container.
+
+services:
+  flask:
+    environment:
+      FLASK_ENV: development
+      FLASK_DEBUG: "1"
+    # Override the CMD from the Dockerfile to use flask run with --reload
+    command: flask run --host=0.0.0.0 --port=5000 --reload
+    volumes:
+      - ./flask_app:/app  # bind-mount so edits on your host appear inside container
