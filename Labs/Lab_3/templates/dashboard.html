@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JWT Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .card {
+            max-width: 700px;
+            margin: 3rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+            padding: 0.7rem 1rem;
+            border: none;
+            border-radius: 6px;
+            background: #2563eb;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        pre {
+            background: #f3f4f6;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        .message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .message.error {
+            display: block;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .message.success {
+            display: block;
+            background: #dcfce7;
+            color: #166534;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>JWT Dashboard</h1>
+        <p>This page calls protected API endpoints with the JWT access token.</p>
+
+        <div id="message" class="message"></div>
+
+        <button id="load-profile">Load /api/me</button>
+        <button id="load-admin">Load /api/admin</button>
+        <button id="refresh-token">Refresh Access Token</button>
+        <button id="logout">Logout</button>
+
+        <h2>Response</h2>
+        <pre id="output">No data loaded yet.</pre>
+    </div>
+
+    <script>
+        const output = document.getElementById("output");
+        const messageBox = document.getElementById("message");
+
+        function getAccessToken() {
+            return sessionStorage.getItem("access_token");
+        }
+
+        function getRefreshToken() {
+            return sessionStorage.getItem("refresh_token");
+        }
+
+        function showMessage(message, type) {
+            messageBox.textContent = message;
+            messageBox.className = `message ${type}`;
+        }
+
+        async function callApi(url, token) {
+            const response = await fetch(url, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            const data = await response.json();
+            output.textContent = JSON.stringify(data, null, 2);
+
+            if (!response.ok) {
+                showMessage(data.msg || data.error || "Request failed.", "error");
+            } else {
+                showMessage("Request successful.", "success");
+            }
+        }
+
+        document.getElementById("load-profile").addEventListener("click", async () => {
+            const token = getAccessToken();
+            if (!token) {
+                showMessage("You are not logged in.", "error");
+                return;
+            }
+            await callApi("/api/me", token);
+        });
+
+        document.getElementById("load-admin").addEventListener("click", async () => {
+            const token = getAccessToken();
+            if (!token) {
+                showMessage("You are not logged in.", "error");
+                return;
+            }
+            await callApi("/api/admin", token);
+        });
+
+        document.getElementById("refresh-token").addEventListener("click", async () => {
+            const token = getRefreshToken();
+            if (!token) {
+                showMessage("No refresh token found.", "error");
+                return;
+            }
+
+            const response = await fetch("/api/refresh", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            const data = await response.json();
+            output.textContent = JSON.stringify(data, null, 2);
+
+            if (!response.ok) {
+                showMessage(data.msg || data.error || "Refresh failed.", "error");
+                return;
+            }
+
+            sessionStorage.setItem("access_token", data.access_token);
+            showMessage("Access token refreshed.", "success");
+        });
+
+        document.getElementById("logout").addEventListener("click", async () => {
+            const token = getAccessToken();
+            if (token) {
+                await fetch("/api/logout", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+            }
+
+            sessionStorage.removeItem("access_token");
+            sessionStorage.removeItem("refresh_token");
+            window.location.href = "/";
+        });
+    </script>
+</body>
+</html>
