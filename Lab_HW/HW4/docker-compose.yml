@@ -1,0 +1,12 @@
+services:
+  web:
+    build: .
+    container_name: hw4-https-app
+    ports:
+      - "5000:5000"
+    environment:
+      FLASK_DEBUG: "1"
+      SSL_CERT_FILE: /app/certs/localhost.crt
+      SSL_KEY_FILE: /app/certs/localhost.key
+    volumes:
+      - ./certs:/app/certs:ro
